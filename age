@@ -1,5 +1,26 @@
 #!/usr/bin/env bash
 
+while getopts ":b:" opt; do
+  case $opt in
+    b)
+      BIRTH=$OPTARG;
+      echo $BIRTH > ~/.birth;
+      echo $BIRTH
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND -1))
+
+
 if [[ -e ~/.birth ]]; then
 	let BIRTH=$(<~/.birth)
 else
