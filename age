@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+let BIRTH=$(<~/.birth)
+let NOW=`date +%Y%m%d`
+let DIFF=(`date +%s -d $NOW`-`date +%s -d $BIRTH`)/86400
+
+echo "$DIFF day's left since your birth date"
