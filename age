@@ -29,17 +29,22 @@ function get_birth() {
   fi
 }
 
-function user_output() {
+function calculate_birth() {
   let NOW=`date +%Y%m%d`
-  let DIFF=(`date +%s -d $NOW`-`date +%s -d $BIRTH`)/86400
+  let DIFF=(`date +%s -d $NOW`-`date +%s -d $BIRTH`)/86400 
+}
 
-  echo "$DIFF day's left since your birth date"
+function user_output() {
+  bold=$(tput bold)
+  echo -e "You are \e[40m\033[1m\e[93m$DIFF\033[0m days old."
 }
 
 function main() {
   check_opts "$@"
 
   get_birth
+
+  calculate_birth
   
   user_output
 }
