@@ -1,32 +1,48 @@
 #!/usr/bin/env bash
 
-while getopts ":b:" opt; do
-  case $opt in
-    b)
-      BIRTH=$OPTARG;
-      echo $BIRTH > ~/.birth;
-      echo $BIRTH
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      exit 1
-      ;;
-    :)
-      echo "Option -$OPTARG requires an argument." >&2
-      exit 1
-      ;;
-  esac
-done
+function check_opts() {
+  while getopts ":b:" opt; do
+    case $opt in
+      b)
+        BIRTH=$OPTARG;
+        echo $BIRTH > ~/.birth;
+        ;;
+      \?)
+        echo "Invalid option: -$OPTARG" >&2
+        exit 1
+        ;;
+      :)
+        echo "Option -$OPTARG requires an argument." >&2
+        exit 1
+        ;;
+    esac
+  done
 
-shift $((OPTIND -1))
+  shift $((OPTIND -1))
+}
+
+function get_birth() {
+  if [[ -e ~/.birth ]]; then
+    let BIRTH=$(<~/.birth)
+  else
+    let BIRTH=19710311
+  fi
+}
+
+function user_output() {
+  let NOW=`date +%Y%m%d`
+  let DIFF=(`date +%s -d $NOW`-`date +%s -d $BIRTH`)/86400
+
+  echo "$DIFF day's left since your birth date"
+}
+
+function main() {
+  check_opts "$@"
+
+  get_birth
+  
+  user_output
+}
 
 
-if [[ -e ~/.birth ]]; then
-	let BIRTH=$(<~/.birth)
-else
-	let BIRTH=19710311
-fi
-let NOW=`date +%Y%m%d`
-let DIFF=(`date +%s -d $NOW`-`date +%s -d $BIRTH`)/86400
-
-echo "$DIFF day's left since your birth date"
+main "$@"
