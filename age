@@ -5,7 +5,7 @@ function check_opts() {
     case $opt in
       b)
         BIRTH=$OPTARG;
-        echo $BIRTH > ~/.birth;
+        echo $BIRTH > ~/.age/birth;
         ;;
       \?)
         echo "Invalid option: -$OPTARG" >&2
@@ -22,8 +22,8 @@ function check_opts() {
 }
 
 function get_birth() {
-  if [[ -e ~/.birth ]]; then
-    let BIRTH=$(<~/.birth)
+  if [[ -e ~/.age/birth ]]; then
+    let BIRTH=$(<~/.age/birth)
   else
     let BIRTH=19710311
   fi
