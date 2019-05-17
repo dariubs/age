@@ -6,13 +6,13 @@ Calculate your age in command line.
 install
 -------
 
-1. Run install script
+1. Clone the repository to "$HOME/.age".
 
 ```shell
-wget -qO- https://raw.githubusercontent.com/dariubs/age/master/install.sh | bash
+git clone https://github.com/dariubs/age.git $HOME/.age
 ```
 
-2. Append `age` to PATH. `~/.bashrc` for bash and `~/.zshrc` for zsh
+2. Append `age` to PATH. `$HOME/.bashrc` for bash and `$HOME/.zshrc` for zsh
 
 ```shell
 export PATH="$HOME/.age:$PATH"
